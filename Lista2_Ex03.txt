@@ -1,0 +1,93 @@
+#include <stdio.h>
+
+int main() {
+
+   long long X;
+    int N;
+
+    scanf("%lld %d",&X, &N);
+
+    long long melhorDist = -1;
+    long long melhorValor = 0;
+    int melhorCanal = 0;
+    int melhorMinuto = 0;
+
+    for (int canal =1;canal<=N;canal++) {
+
+        long long a,b;
+        scanf("%lld %lld", &a,&b);
+
+        long long f1 = a;
+        long long f2 = b;
+
+        long long melhorDistCanal = -1;
+        long long melhorvalorcanal = 0;
+        int melhorMinutoCanal = 0;
+
+        long long dist;
+        if (f1>X) dist = f1-X;
+        else dist = X- f1;
+
+        melhorDistCanal = dist;
+        melhorvalorcanal = f1;
+        melhorMinutoCanal = 1;
+
+        if (f2>X) dist = f2-X;
+        else dist = X-f2;
+
+        if (dist < melhorDistCanal|| (dist == melhorDistCanal && f2 < melhorvalorcanal)) {
+            melhorDistCanal = dist;
+            melhorvalorcanal = f2;
+            melhorMinutoCanal = 2;
+        }
+        int minuto = 3;
+
+        while (f2<=X) {
+            long long f3 = f1+f2;
+
+            if (f3>X) dist = f3 - X;
+            else dist = X-f3;
+
+            if (dist<melhorDistCanal || (dist == melhorDistCanal && f3< melhorvalorcanal)) {
+
+                melhorDistCanal = dist;
+                melhorvalorcanal = f3;
+                melhorMinutoCanal = minuto;
+            }
+
+            f1 = f2;
+            f2 = f3;
+            minuto++;
+        }
+
+        if (melhorDist == -1 || melhorDistCanal < melhorDist || (melhorDistCanal == melhorDist && canal > melhorCanal)) {
+
+            melhorDist = melhorDistCanal;
+            melhorCanal = canal;
+            melhorMinuto = melhorMinutoCanal;
+            melhorValor = melhorvalorcanal;
+        }
+    }
+
+    long long temp = melhorValor;
+    int somaDigitos = 0;
+
+    while (temp>0) {
+        somaDigitos += temp % 10;
+        temp /= 10;
+    }
+
+    int vip = (somaDigitos >10);
+
+    if (vip) {
+        printf("Xupenio, para ir ao lulupalooza vc deve entrar no canal %d "
+               "e sera chamado mais ou menos no minuto %d e com o VIP garantido!!!\n",
+               melhorCanal, melhorMinuto);
+    } else {
+        printf("Xupenio, para ir ao lulupalooza vc deve entrar no canal %d "
+               "e sera chamado mais ou menos no minuto %d, mas o ingresso VIP não vai rolar :(\n",
+               melhorCanal, melhorMinuto);
+    }
+
+    return 0;
+}

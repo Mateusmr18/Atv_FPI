@@ -1,0 +1,84 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_PALAVRAS 50
+#define MAX_TAM 101
+
+int main() {
+
+    char s[102];
+    char palavras[MAX_PALAVRAS * MAX_TAM];
+    int offsets[MAX_PALAVRAS];
+    int n_palavras = 0;
+    int pos = 0;
+
+    fgets(s, sizeof(s), stdin);
+    int tamanho = strlen(s);
+    if (s[tamanho - 1] == '\n') s[tamanho - 1] = '\0';
+
+    int i = 0;
+    while (s[i] != '\0') {
+        while (s[i] != '\0' && !((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z')))
+            i++;
+
+        if (s[i] == '\0') break;
+
+        offsets[n_palavras] = pos;
+        while (s[i] != '\0' && ((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z'))) {
+            palavras[pos++] = s[i];
+            i++;
+        }
+        palavras[pos++] = '\0';
+        n_palavras++;
+    }
+
+    int total = 0;
+    int primeiro = 1;
+
+    for (int i = 0; i < n_palavras; i++) {
+        for (int j = i + 1; j < n_palavras; j++) {
+
+            char *pa = &palavras[offsets[i]];
+            char *pb = &palavras[offsets[j]];
+
+            /* Tamanhos diferentes nao podem ser anagramas */
+            if (strlen(pa) != strlen(pb)) continue;
+
+            int freq[26] = {0};
+
+            for (int k = 0; pa[k] != '\0'; k++) {
+                char c = (pa[k] >= 'A' && pa[k] <= 'Z') ? pa[k] + 32 : pa[k];
+                freq[c - 'a']++;
+            }
+
+            for (int k = 0; pb[k] != '\0'; k++) {
+                char c = (pb[k] >= 'A' && pb[k] <= 'Z') ? pb[k] + 32 : pb[k];
+                freq[c - 'a']--;
+            }
+
+            int anagrama = 1;
+            for (int k = 0; k < 26; k++) {
+                if (freq[k] != 0) {
+                    anagrama = 0;
+                    break;
+                }
+            }
+
+            if (anagrama) {
+                if (primeiro) {
+                    printf("Pares de anagramas encontrados:\n");
+                    primeiro = 0;
+                }
+                printf("%s e %s\n", pa, pb);
+                total++;
+            }
+        }
+    }
+
+    if (total == 0)
+        printf("Nao existem anagramas na frase.\n");
+    else
+        printf("\nTotal de pares: %d\n", total);
+
+    return 0;
+}

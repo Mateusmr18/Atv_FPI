@@ -1,0 +1,37 @@
+#include <stdio.h>
+
+int main() {
+
+    char C;
+    int linhas;
+
+    scanf("%c",&C);
+
+    linhas = C - 'A' +1;
+
+    for (int i = 0; i< linhas ;i++) {
+
+        int pontos = linhas - i - 1;
+
+        for (int j=0; j<pontos; j++) {
+            printf(".");
+        }
+
+        char atual = 'A' + i;
+
+        for (char letra = 'A'; letra<=atual;letra++) {
+            printf("%c",letra);
+        }
+
+        for (char letra = atual-1;letra>='A'; letra--) {
+            printf("%c",letra);
+        }
+
+        for (int j = 0; j<pontos; j++) {
+            printf(".");
+        }
+
+        printf("\n");
+    }
+    return 0;
+}

@@ -1,0 +1,97 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int clientes, clientes_multiplos, clientes_sistema;
+    scanf("%d", &clientes);
+    scanf("%d", &clientes_multiplos);
+    scanf("%d", &clientes_sistema);
+
+    int latas_clientes[1001] = {0};
+    //Substitui matriz de horarios por vetor 1D com offsets de 6 em 6
+    char horarios[1001 * 6];
+    int i, j;
+
+    //Inicializa todos os horarios como string vazia
+    for (i = 0; i <= clientes; i++)
+        horarios[i * 6] = '\0';
+
+    for (i = 0; i < clientes_sistema; i++) {
+        char horario[6];
+        int latas;
+        scanf("%s %d", horario, &latas);
+
+        int horas   = (horario[0] - '0') * 10 + (horario[1] - '0');
+        int minutos = (horario[3] - '0') * 10 + (horario[4] - '0');
+        int totalMinutos = (horas - 7) * 60 + minutos - 3;
+
+        if (totalMinutos < 0 || totalMinutos % 3 != 0)
+            continue;
+
+        int clienteNumero = totalMinutos / 3 + 1;
+
+        if (clienteNumero < clientes) {
+            latas_clientes[clienteNumero] = latas;
+            /* Copia horario para posicao correta no vetor 1D */
+            int k;
+            for (k = 0; horario[k] != '\0'; k++)
+                horarios[clienteNumero * 6 + k] = horario[k];
+            horarios[clienteNumero * 6 + k] = '\0';
+        }
+    }
+
+    int total_latas = 0;
+    int vencedor = 0;
+
+    for (i = 1; i <= clientes; i++) {
+        int latas;
+        if (latas_clientes[i] > 0)
+            latas = latas_clientes[i];
+        else if (clientes_multiplos != 0 && i % clientes_multiplos == 0)
+            latas = 1;
+        else
+            latas = 0;
+
+        for (j = 0; j < latas; j++) {
+            total_latas++;
+            if (total_latas == 50) {
+                vencedor = i;
+                break;
+            }
+        }
+        if (vencedor != 0) break;
+    }
+
+    if (total_latas < 50) {
+        printf("Ainda nao foram vendidas latas suficientes. Faltam %d latas.\n", 50 - total_latas);
+    } else {
+        char horariofinal[6];
+
+        if (horarios[vencedor * 6] == '\0') {
+            int minutosPassados = (vencedor - 1) * 3 + 3;
+            int hora   = 7 + minutosPassados / 60;
+            int minuto = minutosPassados % 60;
+            /* sprintf substituido por montagem manual */
+            horariofinal[0] = '0' + hora / 10;
+            horariofinal[1] = '0' + hora % 10;
+            horariofinal[2] = ':';
+            horariofinal[3] = '0' + minuto / 10;
+            horariofinal[4] = '0' + minuto % 10;
+            horariofinal[5] = '\0';
+        } else {
+            int k;
+            for (k = 0; horarios[vencedor * 6 + k] != '\0'; k++)
+                horariofinal[k] = horarios[vencedor * 6 + k];
+            horariofinal[k] = '\0';
+        }
+
+        int latascompradas = latas_clientes[vencedor];
+        if (latascompradas == 0) latascompradas = 1;
+
+        printf("Quem levou a cesta basica foi o %d* cliente atendido por coragem, as %s. Que comprou %d lata", vencedor, horariofinal, latascompradas);
+        if (latascompradas > 1) printf("s");
+        printf(".\n");
+    }
+
+    return 0;
+}
