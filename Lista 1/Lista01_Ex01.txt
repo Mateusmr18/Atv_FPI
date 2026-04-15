@@ -1,0 +1,112 @@
+#include <stdio.h>
+
+int main(void) {
+    int dia_nas, mes_nas, ano_nas;
+    int dia_atual, mes_atual, ano_atual;
+
+    scanf("%d/%d/%d", &dia_nas, &mes_nas, &ano_nas);
+    scanf("%d/%d/%d", &dia_atual, &mes_atual, &ano_atual);
+
+    int formula_amor, formula_sorte, formula_cor;
+
+    formula_amor = (((dia_nas+dia_atual) + (mes_nas+mes_atual) + (ano_nas+ano_atual))*7)%101;
+    formula_sorte = dia_atual+dia_nas+mes_atual+mes_nas;
+
+    printf("Amor: %d%% ", formula_amor);
+    if (formula_amor < 20) {
+        printf("Pessimo dia para se apaixonar.\n");
+    } else if (formula_amor <= 40) {
+        printf("Melhor manter o coracao <3 longe de perigo.\n");
+    } else if (formula_amor <= 69) {
+        printf("Se o papo e as ideias baterem, esta liberado pensar em algo.\n");
+    } else if (formula_amor <= 80) {
+        printf("Saia com o coracao aberto, mas lembre, nem toda troca de olhar em onibus e sinal de romance.\n");
+    } else{
+        printf("Um dia deslumbrantemente lindo para amar. Ps: Cuidado com a intensidade.\n");
+    }
+
+    int diferenca_anos;
+    if (ano_atual > ano_nas) {
+        diferenca_anos = ano_atual - ano_nas;
+    }else {
+        diferenca_anos = ano_nas - ano_atual;
+    }
+    int sorte = ((formula_sorte*9)+diferenca_anos)%101;
+    printf("Sorte: %d%% ", sorte);
+
+    if (sorte < 30) {
+        printf("Nem jogue moedas pra cima hoje.");
+    } else if (sorte <=50) {
+        printf("Melhor nao arriscar.");
+    } else if (sorte <=79) {
+        printf("Por sua conta em risco.");
+    } else if (sorte <= 90) {
+        printf("Hoje vale a pena arriscar.");
+    } else {
+        printf("Nao tenha medo de virar cartas hoje.");
+    }
+
+    printf(" Sem tigrinho nem jogos de azar, por favor!\n");
+
+    int cal_anos, cal_dias_meses, formula_trabalho, trabalho;
+    cal_anos = ano_atual+ano_nas;
+    cal_dias_meses = dia_atual +mes_atual+dia_nas+mes_nas;
+    formula_trabalho = cal_anos-(cal_dias_meses*8);
+    trabalho = formula_trabalho %101;
+
+    printf("Trabalho: %d%% ",trabalho);
+
+    if (trabalho<40) {
+        printf("Hoje nao sera um dia tao proveitoso, keep calm e faca o basico.\n");
+    } else if (trabalho <= 50) {
+        printf("Segura a emocao, nao xinga ninguem, nao esquece de beber agua.\n");
+    } else if (trabalho <= 69) {
+        printf("Um dia proveitoso com certeza, leve sua simpatia consigo.\n");
+    } else if (trabalho <= 84) {
+        printf("Boas vibracoes hoje, chances podem estar ao seu redor.\n");
+    } else {
+        printf("Use do maximo de networking possível hoje, dia bom para negocios.\n");
+    }
+
+    formula_cor = (dia_atual*dia_atual) + (mes_atual*mes_atual) + (ano_atual*ano_atual) +
+        (dia_nas*dia_nas) + (mes_nas*mes_nas) + (ano_nas*ano_nas);
+
+    int cor = formula_cor % 11;
+    switch (cor) {
+        case 0:
+            printf("Cor: Cinza.\n");
+            break;
+        case 1:
+            printf("Cor: Vermelho.\n");
+            break;
+        case 2:
+            printf("Cor: Laranja.\n");
+            break;
+        case 3:
+            printf("Cor: Amarelo.\n");
+            break;
+        case 4:
+            printf("Cor: Verde.\n");
+            break;
+        case 5:
+            printf("Cor: Azul.\n");
+            break;
+        case 6:
+            printf("Cor: Roxo.\n");
+            break;
+        case 7:
+            printf("Cor: Marrom.\n");
+            break;
+        case 8:
+            printf("Cor: Rosa.\n");
+            break;
+        case 9:
+            printf("Cor: Preto.\n");
+            break;
+        case 10:
+            printf("Cor: Branco.\n");
+            break;
+    }
+
+    return 0;
+}

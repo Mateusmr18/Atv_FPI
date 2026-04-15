@@ -1,0 +1,73 @@
+#include <stdio.h>
+
+void lerMatriz(char matriz[][101], int m, int n) {
+    for (int i = 0; i < m; i++) {
+        scanf("%s", matriz[i]);
+    }
+}
+
+void aplicarEnfeites(char matriz[][101], char resultado[][101], int m, int n) {
+    // Copia matriz original para resultado
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            resultado[i][j] = matriz[i][j];
+        }
+        resultado[i][n] = '\0';
+    }
+
+    // Dire��es: cima, baixo, esquerda, direita (para '+')
+    int dirLin[] = {-1, 1, 0, 0};
+    int dirCol[] = {0, 0, -1, 1};
+
+    // Dire��es diagonais (para 'x')
+    int diagLin[] = {-1, -1, 1, 1};
+    int diagCol[] = {-1, 1, -1, 1};
+
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (matriz[i][j] == 'P') {
+
+                // Aplica 'x' nas diagonais
+                for (int d = 0; d < 4; d++) {
+                    int ni = i + diagLin[d];
+                    int nj = j + diagCol[d];
+                    if (ni >= 0 && ni < m && nj >= 0 && nj < n) {
+                        if (resultado[ni][nj] == '-') {
+                            resultado[ni][nj] = 'x';
+                        }
+                    }
+                }
+
+                // Aplica '+' nas dire��es cardinais (prevalece sobre 'x')
+                for (int d = 0; d < 4; d++) {
+                    int ni = i + dirLin[d];
+                    int nj = j + dirCol[d];
+                    if (ni >= 0 && ni < m && nj >= 0 && nj < n) {
+                        if (resultado[ni][nj] == '-' || resultado[ni][nj] == 'x') {
+                            resultado[ni][nj] = '+';
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+void imprimirMatriz(char matriz[][101], int m) {
+    for (int i = 0; i < m; i++) {
+        printf("%s\n", matriz[i]);
+    }
+}
+
+int main() {
+    int m, n;
+    char matriz[101][101];
+    char resultado[101][101];
+
+    scanf("%d %d", &m, &n);
+    lerMatriz(matriz, m, n);
+    aplicarEnfeites(matriz, resultado, m, n);
+    imprimirMatriz(resultado, m);
+
+    return 0;
+}

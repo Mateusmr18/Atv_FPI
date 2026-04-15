@@ -1,0 +1,105 @@
+#include <stdio.h>
+
+int main(){
+
+    int T,x,y,z;
+    scanf("%d %d %d %d",&T,&x,&y,&z);
+
+    int A,B,C;
+    int sobra=0;
+    int investimento=0;
+    int conseguiu=0;
+
+    if((T*x)%100==0 && (T*y)%100==0 && (T*z)%100==0){
+        A=T*x/100;
+        B=T*y/100;
+        C=T*z/100;
+        sobra=T-(A+B+C);
+        conseguiu=1;
+    }
+
+
+    if(!conseguiu){
+        int T1=T+1;
+        if((T1*x)%100==0 && (T1*y)%100==0 && (T1*z)%100==0){
+            int s=T1-(T1*x/100+T1*y/100+T1*z/100);
+            if(s>=2){
+                A=T1*x/100;
+                B=T1*y/100;
+                C=T1*z/100;
+                sobra=s;
+                investimento=1;
+                conseguiu=1;
+            }
+        }
+    }
+
+
+    if(!conseguiu){
+        int T2=T+2;
+        if((T2*x)%100==0 && (T2*y)%100==0 && (T2*z)%100==0){
+            int s=T2-(T2*x/100+T2*y/100+T2*z/100);
+            if(s>=3){
+                A=T2*x/100;
+                B=T2*y/100;
+                C=T2*z/100;
+                sobra=s;
+                investimento=2;
+                conseguiu=1;
+            }
+        }
+    }
+
+
+    if(!conseguiu){
+        int T3=T+3;
+        if((T3*x)%100==0 && (T3*y)%100==0 && (T3*z)%100==0){
+            int s=T3-(T3*x/100+T3*y/100+T3*z/100);
+            if(s>=4){
+                A=T3*x/100;
+                B=T3*y/100;
+                C=T3*z/100;
+                sobra=s;
+                investimento=3;
+                conseguiu=1;
+            }
+        }
+    }
+
+    int dinheiro=3;
+
+    if(conseguiu){
+
+        printf("Cada homem ficou com %d, %d e %d reais, respectivamente\n",A,B,C);
+
+        dinheiro = dinheiro - investimento + sobra;
+
+        if(investimento==2){
+            char a,b,c;
+            scanf(" %c %c %c",&a,&b,&c);
+            int soma=(a-'a'+1)+(b-'a'+1)+(c-'a'+1);
+            printf("%d\n",soma);
+        }
+
+        if(investimento==3){
+            int i1,i2,i3,soma=0;
+            scanf("%d %d %d",&i1,&i2,&i3);
+
+            if(i1%3==0) soma+=i1/3;
+            if(i2%3==0) soma+=i2/3;
+            if(i3%3==0) soma+=i3/3;
+
+            printf("%d\n",soma);
+        }
+
+    }else{
+        printf("Nao foi dessa vez que Rebeka pode ajudar...\n");
+    }
+
+    if(dinheiro>=7)
+        printf("Ela conseguiu! Rebeka voltou para casa e apanhou da mae por sumir noite passada!\n");
+    else
+        printf("E parece que Rebeka vai ter que voltar andando...\n");
+
+    return 0;
+}

@@ -1,0 +1,31 @@
+#include <stdio.h>
+
+int main() {
+
+    long long N, A, B;
+
+    scanf("%lld %lld %lld", &N, &A, &B);
+
+    long long soma_total_N = N * (N + 1) / 2;
+
+    long long multiplos_A = N / A; //Verifia quantos multiplos A tem
+    long long somaA_mu = A * multiplos_A * (multiplos_A + 1) / 2; //Formula para somar todos os números de A até N
+
+    long long multiplos_B = N / B; //Verifica quantos multiplos B tem
+    long long somaB_mu = B * multiplos_B * (multiplos_B + 1) / 2; // Formula para somar todos os números de B até N
+
+    long long multiplos_AB = N / (A * B); //Excluir os multiplos de A e B
+    long long somaAB_mu = (A * B) * multiplos_AB * (multiplos_AB + 1) / 2; // Realiza a soma de todos os número de A e B nunto com os multiplos excluidos
+
+    long long resultado = soma_total_N - somaA_mu - somaB_mu + somaAB_mu;
+
+    if (resultado % 2 == 0) {
+        printf("%lld\n", resultado);
+        printf("Lá ele!!!\n");
+    }
+    else {
+        printf("%lld\n",resultado);
+        printf("Opa xupenio AULAS...\n");
+    }
+    return 0;
+}
