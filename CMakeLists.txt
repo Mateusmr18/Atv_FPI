@@ -7,5 +7,6 @@ add_executable(FPI main.c
         "Lista 10/Lista10_Ex01.c"
         "Lista 10/Lista10_Ex02.c"
         "Lista 10/Lista10_Ex03.c"
+        "Lista 10/Lista10_Ex04.c"
 
 )
